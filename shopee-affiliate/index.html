@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barang Pilihan Aku</title>
+<style>
+  :root {
+    --bg: #fff7f3; --card: #ffffff; --text: #222; --muted: #6b6b6b;
+    --accent: #ee4d2d; --chip: #ffe4dc; --border: #f1ddd6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #17120f; --card: #221b17; --text: #f2ece8; --muted: #b3a8a1;
+            --accent: #ff6a4a; --chip: #3a2620; --border: #3a2c26; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { text-align: center; margin-bottom: 20px; }
+  h1 { font-size: 1.5rem; margin: 8px 0 4px; }
+  header p { color: var(--muted); margin: 0; font-size: .95rem; }
+  .disclaimer { font-size: .8rem; color: var(--muted); margin-top: 8px; }
+  input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border);
+          background: var(--card); color: var(--text); font-size: 1rem; margin-bottom: 12px; }
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; }
+  .chip { border: 0; background: var(--chip); color: var(--text); padding: 8px 14px;
+          border-radius: 999px; font-size: .9rem; white-space: nowrap; cursor: pointer; }
+  .chip.active { background: var(--accent); color: #fff; }
+  .item { display: flex; gap: 12px; align-items: center; background: var(--card);
+          border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-bottom: 10px;
+          text-decoration: none; color: inherit; }
+  .item img { width: 72px; height: 72px; object-fit: cover; border-radius: 10px; flex-shrink: 0;
+              background: var(--chip); }
+  .info { flex: 1; min-width: 0; }
+  .name { font-weight: 600; margin-bottom: 2px; }
+  .note { color: var(--muted); font-size: .85rem; }
+  .price { color: var(--accent); font-weight: 700; margin-top: 4px; }
+  .go { background: var(--accent); color: #fff; padding: 8px 12px; border-radius: 10px;
+        font-size: .85rem; font-weight: 600; flex-shrink: 0; }
+  .empty { text-align: center; color: var(--muted); padding: 24px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="title"></h1>
+    <p id="bio"></p>
+    <p class="disclaimer">* Link dalam page ni link affiliate Shopee. Kalau beli guna link ni, aku dapat sedikit komisen tanpa kos tambahan untuk kau. Terima kasih! 🙏</p>
+  </header>
+  <input id="search" type="search" placeholder="Cari barang…">
+  <nav class="chips" id="chips"></nav>
+  <section id="list"></section>
+</main>
+
+<script>
+/* ============================================================
+   EDIT BAHAGIAN NI SAHAJA
+   - link: tampal link affiliate dari app Shopee (Affiliate → Dapatkan Link)
+   - gambar: copy image address gambar produk (atau biar kosong "")
+   ============================================================ */
+const PROFIL = {
+  nama: "Barang Pilihan Aku 🛒",
+  bio: "Barang Shopee yang aku guna sendiri & berbaloi. Update setiap minggu."
+};
+
+const BARANG = [
+  { nama: "Blender mini portable", kategori: "Dapur", harga: "RM29.90",
+    nota: "Sesuai untuk smoothie pagi, cas guna USB", link: "https://s.shopee.com.my/XXXXX", gambar: "" },
+  { nama: "Botol air 1L dengan penanda masa", kategori: "Gaya hidup", harga: "RM15.90",
+    nota: "Bantu minum air cukup setiap hari", link: "https://s.shopee.com.my/YYYYY", gambar: "" },
+  { nama: "Sunscreen SPF50 ringan", kategori: "Kecantikan", harga: "RM24.00",
+    nota: "Tak berminyak, sesuai cuaca panas", link: "https://s.shopee.com.my/ZZZZZ", gambar: "" },
+  { nama: "Stand laptop boleh lipat", kategori: "Gadget", harga: "RM19.90",
+    nota: "Leher tak sakit masa WFH", link: "https://s.shopee.com.my/AAAAA", gambar: "" },
+];
+/* ============================ TAMAT ============================ */
+
+document.getElementById("title").textContent = PROFIL.nama;
+document.getElementById("bio").textContent = PROFIL.bio;
+
+const placeholder = "data:image/svg+xml," + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><text x="36" y="46" font-size="32" text-anchor="middle">🛍️</text></svg>');
+
+let kategoriAktif = "Semua";
+const kategori = ["Semua", ...new Set(BARANG.map(b => b.kategori))];
+const chips = document.getElementById("chips");
+const list = document.getElementById("list");
+const search = document.getElementById("search");
+
+function buatChips() {
+  chips.innerHTML = "";
+  kategori.forEach(k => {
+    const b = document.createElement("button");
+    b.className = "chip" + (k === kategoriAktif ? " active" : "");
+    b.textContent = k;
+    b.onclick = () => { kategoriAktif = k; buatChips(); paparkan(); };
+    chips.appendChild(b);
+  });
+}
+
+function paparkan() {
+  const q = search.value.trim().toLowerCase();
+  const hasil = BARANG.filter(b =>
+    (kategoriAktif === "Semua" || b.kategori === kategoriAktif) &&
+    (b.nama + " " + b.nota).toLowerCase().includes(q));
+  list.innerHTML = "";
+  if (!hasil.length) { list.innerHTML = '<p class="empty">Tak jumpa barang tu 😅</p>'; return; }
+  hasil.forEach(b => {
+    const a = document.createElement("a");
+    a.className = "item"; a.href = b.link; a.target = "_blank"; a.rel = "noopener sponsored";
+    const img = document.createElement("img");
+    img.src = b.gambar || placeholder; img.alt = ""; img.loading = "lazy";
+    img.onerror = () => { img.src = placeholder; };
+    const info = document.createElement("div"); info.className = "info";
+    [["name", b.nama], ["note", b.nota], ["price", b.harga]].forEach(([c, t]) => {
+      const d = document.createElement("div"); d.className = c; d.textContent = t; info.appendChild(d);
+    });
+    const go = document.createElement("span"); go.className = "go"; go.textContent = "Beli";
+    a.append(img, info, go);
+    list.appendChild(a);
+  });
+}
+
+search.addEventListener("input", paparkan);
+buatChips();
+paparkan();
+</script>
+</body>
+</html>
