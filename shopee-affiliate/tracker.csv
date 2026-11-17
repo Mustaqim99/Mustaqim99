@@ -1,3 +1,11 @@
-tarikh,nama_barang,kategori,harga_rm,link_affiliate,tempat_share,jenis_post,klik,order,komisen_rm,nota
-2026-11-17,Contoh: Blender mini portable,Dapur,29.90,https://s.shopee.com.my/XXXXX,Threads,Jawab soalan orang,0,0,0.00,Orang tanya blender murah untuk smoothie
-2026-11-17,Contoh: Botol air 1L,Gaya hidup,15.90,https://s.shopee.com.my/YYYYY,Threads,Content listicle,0,0,0.00,Post "5 barang bawah RM20"
+tarikh,no,nama_barang,kategori,harga_rm,link_affiliate,link_produk,tempat_share,jenis_post,klik,order,komisen_rm,nota
+2026-11-17,1,(isi nama),,,https://s.shopee.com.my/2VtMAaiiiK,https://shopee.com.my/product/57134355/29335777023,,,0,0,0.00,
+2026-11-17,2,(isi nama),,,https://s.shopee.com.my/5fqNwRvQkN,https://shopee.com.my/product/1282819422/54318080959,,,0,0,0.00,
+2026-11-17,3,(isi nama),,,https://s.shopee.com.my/70LlWuzmUh,https://shopee.com.my/product/57134355/58112791852,,,0,0,0.00,
+2026-11-17,4,(isi nama),,,https://s.shopee.com.my/6L64ji0kLZ,https://shopee.com.my/product/57134355/22629947043,,,0,0,0.00,
+2026-11-17,5,(isi nama),,,https://s.shopee.com.my/7AfBjLDdvJ,https://shopee.com.my/product/1050543162/40659619211,,,0,0,0.00,
+2026-11-17,6,(isi nama),,,https://s.shopee.com.my/AKcDVBna5X,https://shopee.com.my/product/82080415/28553780184,,,0,0,0.00,
+2026-11-17,7,(isi nama),,,https://s.shopee.com.my/20x5ZsnYMj,https://shopee.com.my/product/1008568149/46214999200,,,0,0,0.00,
+2026-11-17,8,(isi nama),,,https://s.shopee.com.my/1LhOmgLF1P,https://shopee.com.my/product/122558855/5900290721,,,0,0,0.00,
+2026-11-17,9,(isi nama),,,https://s.shopee.com.my/2VtMAqXzks,https://shopee.com.my/product/1127938701/41126092277,,,0,0,0.00,
+2026-11-17,10,(isi nama),,,https://s.shopee.com.my/1C1CGTdMz,https://shopee.com.my/product/1127938701/40267473102,,,0,0,0.00,
